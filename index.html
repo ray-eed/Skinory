@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skinory – Your Skin. Simplified.</title>
+  <meta name="description" content="Shop 100% original CeraVe skincare in Bangladesh. Dermatologist-recommended moisturisers, cleansers, serums & sunscreens. Fast delivery, cash on delivery available."/>
+  <meta name="keywords" content="CeraVe Bangladesh, original skincare BD, CeraVe moisturiser, skincare online Bangladesh, Skinory"/>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  
+  <!-- Connects to your CSS file -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div id="announce-bar">
+  <span class="ann-sale">SALE</span>
+  <span id="ann-text">Free delivery on orders above ৳2,500 — Use code <strong>SKINORY10</strong> for 10% off!</span>
+  <button class="ann-close" onclick="document.getElementById('announce-bar').style.display='none'">×</button>
+</div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo" onclick="navigate('home')">Skinory</div>
+  <div class="nav-center">
+    <div class="nav-links">
+      <a href="#" id="nav-home" class="active" onclick="navigate('home');return false">Home</a>
+      <a href="#" id="nav-products" onclick="navigate('products');return false">Shop</a>
+      <a href="#" id="nav-blog" onclick="navigate('blog');return false">Tips</a>
+      <a href="#" id="nav-about" onclick="navigate('about');return false">About</a>
+      <a href="#" id="nav-wishlist" onclick="navigate('wishlist');return false">Wishlist</a>
+      <a href="#" id="nav-track" onclick="navigate('track');return false">Track</a>
+    </div>
+    <div class="nav-search-wrap" id="nav-search-bar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Search products…" oninput="handleSearch(this.value)"/>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-mob-search" onclick="toggleMobileSearch()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+    <button class="cart-btn" onclick="openCart()">
+      Cart (<span id="cart-count">0</span>)
+    </button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home-page" class="page active">
+  <div class="flash-banner" id="flash-banner">
+    <div class="flash-title">FLASH SALE — Up to 15% Off!</div>
+    <div class="flash-sub">Limited time offer on selected CeraVe products</div>
+    <div class="countdown" id="countdown">
+      <div class="cd-block"><span class="cd-num" id="cd-h">00</span><span class="cd-label">Hrs</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span class="cd-num" id="cd-m">00</span><span class="cd-label">Min</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Sec</span></div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-badge">✦ official skinory store ✦</div>
+    <h1>Skinory</h1>
+    <p>Your go-to destination for dermatologist-recommended CeraVe skincare. 100% original products delivered to your door across Bangladesh.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="navigate('products')">Shop Now</button>
+      <button class="btn-secondary" onclick="navigate('about')">Our Story</button>
+    </div>
+  </div>
+  
+  <div class="badge-strip">
+    <span class="badge">✦ 100% ORIGINAL</span>
+    <span class="badge">✦ DERM-RECOMMENDED</span>
+    <span class="badge">✦ FAST DELIVERY BD</span>
+    <span class="badge">✦ CASH ON DELIVERY</span>
+    <span class="badge">✦ BKASH / NAGAD</span>
+  </div>
+
+  <!-- SHOP BY CONCERN -->
+  <section>
+    <div class="section-title">Shop by Skin Concern</div>
+    <div class="section-sub">Find exactly what your skin needs</div>
+    <div class="concern-row">
+      <button class="concern-pill" onclick="filterByConcern('acne')">Acne & Breakouts</button>
+      <button class="concern-pill" onclick="filterByConcern('dryness')">Dryness & Flaking</button>
+      <button class="concern-pill" onclick="filterByConcern('oily')">Oily & Shine</button>
+      <button class="concern-pill" onclick="filterByConcern('aging')">Anti-Aging</button>
+      <button class="concern-pill" onclick="filterByConcern('sensitive')">Sensitive Skin</button>
+      <button class="concern-pill" onclick="filterByConcern('brightening')">Brightening</button>
+      <button class="concern-pill" onclick="filterByConcern('baby')">Baby & Kids</button>
+    </div>
+  </section>
+
+  <section id="best-sellers">
+    <div class="section-title">Best Sellers</div>
+    <div class="section-sub">Our most-loved products ranked by purchase count</div>
+    <div class="best-grid" id="best-sellers-grid"></div>
+  </section>
+
+  <section class="why-section">
+    <div class="section-title">Why choose Skinory?</div>
+    <div class="section-sub">We make skincare simple, trusted and accessible</div>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon">01</div><div class="why-title">100% Original</div><div class="why-text">Every product sourced directly — no fakes, no middlemen, no compromises.</div></div>
+      <div class="why-card"><div class="why-icon">02</div><div class="why-title">Fast Delivery</div><div class="why-text">Quick delivery across Bangladesh. Cash on delivery always available.</div></div>
+      <div class="why-card"><div class="why-icon">03</div><div class="why-title">Derm-Approved</div><div class="why-text">CeraVe is the #1 dermatologist-recommended skincare brand worldwide.</div></div>
+      <div class="why-card"><div class="why-icon">04</div><div class="why-title">Easy Support</div><div class="why-text">Reach us on WhatsApp, Instagram or Facebook — we're always here for you.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">What our customers say</div>
+    <div class="section-sub">Real reviews from real skincare lovers</div>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"The CeraVe Moisturising Cream completely transformed my dry skin. Delivery was fast and the product was sealed and original!"</div><div class="testi-name">— Nusrat T., Dhaka</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Ordered the Vitamin C Serum and it arrived within 2 days. Amazing service and the price is way better than local shops."</div><div class="testi-name">— Rafid H., Chittagong</div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★☆</div><div class="testi-text">"Finally found a trusted source for CeraVe in Bangladesh. The foaming cleanser has been a game-changer for my oily skin."</div><div class="testi-name">— Sadia M., Sylhet</div></div>
+    </div>
+  </section>
+
+  <section class="compare-section">
+    <div class="section-title">Which size is right for you?</div>
+    <div class="section-sub">CeraVe Moisturising Cream — all sizes compared</div>
+    <div style="overflow-x:auto;padding:0 8px;">
+      <table class="compare-table">
+        <thead><tr><th>Size</th><th>Price</th><th>Per Gram</th><th>Best For</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>177 gm</td><td>৳1,750</td><td>৳9.9/gm</td><td>Trying for the first time</td><td><button class="btn-buy" style="padding:6px 14px;font-size:12px;border-radius:12px;" onclick="navigate('products');setFilter('moisturiser')">Shop</button></td></tr>
+          <tr><td>227 gm (Tube)</td><td>৳2,250</td><td>৳9.9/gm</td><td>Travel-friendly tube</td><td><button class="btn-buy" style="padding:6px 14px;font-size:12px;border-radius:12px;" onclick="navigate('products');setFilter('moisturiser')">Shop</button></td></tr>
+          <tr><td>340 gm</td><td>৳2,650</td><td>৳7.8/gm</td><td>Daily face + body</td><td><button class="btn-buy" style="padding:6px 14px;font-size:12px;border-radius:12px;" onclick="navigate('products');setFilter('moisturiser')">Shop</button></td></tr>
+          <tr><td>454 gm</td><td>৳2,850</td><td>৳6.3/gm <span class="best-value-badge">Best Value</span></td><td>Whole family use</td><td><button class="btn-buy" style="padding:6px 14px;font-size:12px;border-radius:12px;" onclick="navigate('products');setFilter('moisturiser')">Shop</button></td></tr>
+          <tr><td>539 gm</td><td>৳3,450</td><td>৳6.4/gm</td><td>Bulk stock</td><td><button class="btn-buy" style="padding:6px 14px;font-size:12px;border-radius:12px;" onclick="navigate('products');setFilter('moisturiser')">Shop</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <h2>Get in touch</h2>
+    <p>Ready to order or have a question? Reach us on your favourite platform.</p>
+    <div class="contact-btns">
+      <button class="btn-wa" onclick="window.open('https://wa.me/8801XXXXXXXXX','_blank')">WhatsApp</button>
+      <button class="btn-ig" onclick="window.open('https://instagram.com/skinory.official','_blank')">Instagram</button>
+      <button class="btn-fb" onclick="window.open('https://facebook.com/skinory','_blank')">Facebook</button>
+    </div>
+  </section>
+</div>
+
+<!-- PRODUCTS PAGE -->
+<div id="products-page" class="page">
+  <div class="filter-bar">
+    <label>Filter:</label>
+    <select class="filter-select" id="filter-category" onchange="applyFilters()">
+      <option value="all">All Categories</option>
+      <option value="moisturiser">Moisturisers</option>
+      <option value="cleanser">Cleansers</option>
+      <option value="serum">Serums</option>
+      <option value="sunscreen">Sunscreen</option>
+      <option value="baby">Baby Care</option>
+      <option value="combo">Combos</option>
+    </select>
+    <select class="filter-select" id="filter-skin" onchange="applyFilters()">
+      <option value="all">All Skin Types</option>
+      <option value="dry">Dry</option>
+      <option value="oily">Oily</option>
+      <option value="combination">Combination</option>
+      <option value="sensitive">Sensitive</option>
+    </select>
+    <select class="filter-select" id="filter-concern" onchange="applyFilters()">
+      <option value="all">All Concerns</option>
+      <option value="acne">Acne</option>
+      <option value="dryness">Dryness</option>
+      <option value="aging">Anti-Aging</option>
+      <option value="brightening">Brightening</option>
+    </select>
+    <select class="filter-select" id="filter-ingredient" onchange="applyFilters()">
+      <option value="all">All Ingredients</option>
+      <option value="retinol">Retinol</option>
+      <option value="niacinamide">Niacinamide</option>
+      <option value="hyaluronic">Hyaluronic Acid</option>
+      <option value="salicylic">Salicylic Acid</option>
+      <option value="vitamin c">Vitamin C</option>
+      <option value="ceramide">Ceramide</option>
+    </select>
+    <select class="filter-select" id="filter-sort" onchange="applyFilters()">
+      <option value="default">Sort: Default</option>
+      <option value="popular">Most Popular</option>
+      <option value="new">Newest First</option>
+      <option value="low">Price: Low → High</option>
+      <option value="high">Price: High → Low</option>
+      <option value="rating">Highest Rated</option>
+    </select>
+    <span class="filter-count" id="filter-count"></span>
+  </div>
+  <section><div class="products-grid" id="products-grid"></div></section>
+</div>
+
+<!-- BLOG PAGE -->
+<div id="blog-page" class="page">
+  <div class="wishlist-hero">
+    <h1>Skincare Tips</h1>
+    <p>Expert guides to help you build your best routine</p>
+  </div>
+  <div id="blog-list-view">
+    <section>
+      <div class="blog-grid" id="blog-grid"></div>
+    </section>
+  </div>
+  <div id="blog-article-view" style="display:none;">
+    <div class="blog-page-content" id="blog-article-content"></div>
+    <div style="text-align:center;padding-bottom:48px;">
+      <button class="btn-primary" onclick="showBlogList()">← Back to Tips</button>
+    </div>
+  </div>
+</div>
+
+<!-- WISHLIST PAGE -->
+<div id="wishlist-page" class="page">
+  <div class="wishlist-hero"><h1>My Wishlist</h1><p>Products you've saved for later</p></div>
+  <section><div id="wishlist-grid" class="products-grid"></div></section>
+</div>
+
+<!-- TRACK ORDER PAGE -->
+<div id="track-page" class="page">
+  <div class="wishlist-hero"><h1>Track Your Order</h1><p>Enter your order ID and phone number to check your status</p></div>
+  <section>
+    <div class="track-box">
+      <h3>Order Lookup</h3>
+      <div class="form-group"><label>Order ID</label><input type="text" id="track-id" placeholder="e.g. SKN-123456" oninput="this.value=this.value.toUpperCase()"/></div>
+      <div class="form-group"><label>Phone Number</label><input type="text" id="track-phone" placeholder="01XXXXXXXXX"/></div>
+      <button class="btn-primary" style="width:100%;" onclick="trackOrder()">Track Order</button>
+      <div class="track-result" id="track-result">
+        <div class="track-row"><span>Order ID</span><span id="tr-id"></span></div>
+        <div class="track-row"><span>Status</span><span id="tr-status"></span></div>
+        <div class="track-row"><span>Customer</span><span id="tr-name"></span></div>
+        <div class="track-row"><span>Phone</span><span id="tr-phone"></span></div>
+        <div class="track-row"><span>District</span><span id="tr-district"></span></div>
+        <div class="track-row"><span>Payment</span><span id="tr-payment"></span></div>
+        <div class="track-row"><span>Total</span><span id="tr-total"></span></div>
+        <div class="track-row"><span>Date</span><span id="tr-date"></span></div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rose-b);">
+          <div style="font-size:11px;font-weight:700;color:var(--rose);letter-spacing:.5px;margin-bottom:8px;text-transform:uppercase;">Items</div>
+          <div id="tr-items" style="font-size:13px;color:var(--text-m);line-height:1.9;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="about-page" class="page">
+  <div class="about-hero"><h1>About Skinory</h1><p>We started Skinory with one belief — everyone in Bangladesh deserves access to genuinely good skincare, without the confusion or the fakes.</p></div>
+  <section>
+    <div class="section-title">Our Story</div>
+    <div class="section-sub">From frustration came a mission</div>
+    <div class="about-grid">
+      <div class="about-card"><h3>The Problem We Solved</h3><p>Finding 100% original CeraVe products in Bangladesh was a nightmare — counterfeit products, inflated prices, and zero reliability. We decided to fix that.</p></div>
+      <div class="about-card"><h3>What We Do</h3><p>Skinory sources directly from authorised distributors and delivers CeraVe skincare — the #1 dermatologist-recommended brand — right to your door at fair prices.</p></div>
+      <div class="about-card"><h3>Our Promise</h3><p>Every single product you buy from us is 100% original, properly sealed, and backed by our authenticity guarantee. No shortcuts, ever.</p></div>
+      <div class="about-card"><h3>Delivery Coverage</h3><p>We deliver across all of Bangladesh including Dhaka, Chittagong, Sylhet, Rajshahi and more — with Cash on Delivery always available.</p></div>
+    </div>
+  </section>
+  <section class="why-section">
+    <div class="section-title">Our Values</div>
+    <div class="section-sub" style="margin-bottom:24px;">What we stand for, every single day</div>
+    <div class="values-row">
+      <span class="value-pill">✦ Authenticity</span><span class="value-pill">✦ Transparency</span><span class="value-pill">✦ Accessibility</span><span class="value-pill">✦ Customer First</span><span class="value-pill">✦ Science-Backed</span>
+    </div>
+  </section>
+  <section class="contact-section">
+    <h2>Get in touch</h2><p>Questions, feedback or just want to say hi?</p>
+    <div class="contact-btns">
+      <button class="btn-wa" onclick="window.open('https://wa.me/8801XXXXXXXXX','_blank')">WhatsApp</button>
+      <button class="btn-ig" onclick="window.open('https://instagram.com/skinory.official','_blank')">Instagram</button>
+      <button class="btn-fb" onclick="window.open('https://facebook.com/skinory','_blank')">Facebook</button>
+    </div>
+  </section>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="admin-page" class="page">
+  <div class="admin-page">
+    <button class="back-btn" onclick="navigate('home')">← Back to Site</button>
+    <div class="admin-header">
+      <h2>Admin Panel</h2>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <button class="btn-export" onclick="exportCSV()">Export Orders CSV</button>
+        <button class="back-btn" style="margin:0;background:#fee2e2;color:#dc2626;" onclick="adminLogout()">Logout</button>
+      </div>
+    </div>
+    <div class="stats-grid" id="admin-stats"></div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('products',this)">Products</button>
+      <button class="admin-tab" onclick="switchAdminTab('add',this)">Add Product</button>
+      <button class="admin-tab" onclick="switchAdminTab('orders',this)">Orders</button>
+      <button class="admin-tab" onclick="switchAdminTab('coupons',this)">Coupons</button>
+    </div>
+    <div class="admin-panel active" id="admin-products"><table class="admin-table" id="admin-table"></table></div>
+    <div class="admin-panel" id="admin-add">
+      <div class="add-form">
+        <h3>Add New Product</h3>
+        <div class="add-form-grid">
+          <div class="form-group"><label>Product Name</label><input type="text" id="a-name" placeholder="e.g. Hydrating Cleanser"/></div>
+          <div class="form-group"><label>Size / Volume</label><input type="text" id="a-size" placeholder="e.g. 237 ml"/></div>
+          <div class="form-group"><label>Price (৳)</label><input type="number" id="a-price" placeholder="e.g. 2150"/></div>
+          <div class="form-group"><label>Sale Price (৳) — optional</label><input type="number" id="a-sale" placeholder="Leave blank if no sale"/></div>
+          <div class="form-group"><label>Category</label>
+            <select id="a-cat" class="filter-select" style="width:100%;border-radius:12px;padding:12px 16px;">
+              <option value="moisturiser">Moisturiser</option><option value="cleanser">Cleanser</option><option value="serum">Serum</option><option value="sunscreen">Sunscreen</option><option value="baby">Baby Care</option><option value="combo">Combo</option>
+            </select></div>
+          <div class="form-group"><label>Skin Type</label>
+            <select id="a-skin" class="filter-select" style="width:100%;border-radius:12px;padding:12px 16px;">
+              <option value="all-skin">All Types</option><option value="dry">Dry</option><option value="oily">Oily</option><option value="combination">Combination</option><option value="sensitive">Sensitive</option>
+            </select></div>
+          <div class="form-group"><label>Stock Quantity</label><input type="number" id="a-stock" placeholder="e.g. 20"/></div>
+          <div class="form-group"><label>Rating (0–5)</label><input type="number" id="a-rating" min="0" max="5" step="0.1" placeholder="e.g. 4.8"/></div>
+          <div class="form-group"><label>Mark as New?</label>
+            <select id="a-new" class="filter-select" style="width:100%;border-radius:12px;padding:12px 16px;"><option value="0">No</option><option value="1">Yes — show NEW tag</option></select></div>
+        </div>
+        <div class="form-group">
+          <label>Product Images</label>
+          <div class="img-upload-row">
+            <input type="text" id="a-img-url" placeholder="Paste image URL…"/>
+            <button class="btn-upload" onclick="addImageUrl()">+ URL</button>
+            <button class="btn-upload" onclick="document.getElementById('a-img-file').click()">Upload File</button>
+            <input type="file" id="a-img-file" accept="image/*" multiple onchange="handleImgFiles(this)"/>
+          </div>
+          <div class="img-preview-list" id="a-img-preview"></div>
+        </div>
+        <div class="form-group"><label>Description</label><textarea id="a-desc" rows="3" class="filter-select" style="width:100%;resize:vertical;" placeholder="Brief product description…"></textarea></div>
+        <div class="form-group"><label>How To Use</label><textarea id="a-how" rows="2" class="filter-select" style="width:100%;resize:vertical;" placeholder="Usage instructions…"></textarea></div>
+        <button class="btn-add-product" onclick="addProduct()">Add Product</button>
+      </div>
+    </div>
+    <div class="admin-panel" id="admin-orders"><table class="admin-table" id="orders-table"></table></div>
+    <div class="admin-panel" id="admin-coupons">
+      <div class="add-form">
+        <h3>Coupon Codes</h3>
+        <div class="add-form-grid">
+          <div class="form-group"><label>Code</label><input type="text" id="coup-code" placeholder="e.g. SKINORY10" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()"/></div>
+          <div class="form-group"><label>Discount %</label><input type="number" id="coup-pct" placeholder="e.g. 10" min="1" max="100"/></div>
+        </div>
+        <button class="btn-add-product" onclick="addCoupon()">Add Coupon</button>
+        <div style="margin-top:20px;" id="coupon-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Skinory</h4>
+      <p>Your go-to source for 100% original CeraVe skincare in Bangladesh.</p>
+      <p style="margin-top:8px;">Dhaka, Bangladesh</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a onclick="navigate('home')">Home</a>
+      <a onclick="navigate('products')">Shop</a>
+      <a onclick="navigate('blog')">Skincare Tips</a>
+      <a onclick="navigate('about')">About Us</a>
+      <a onclick="navigate('track')">Track Order</a>
+    </div>
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <a onclick="navigate('products');setFilter('moisturiser')">Moisturisers</a>
+      <a onclick="navigate('products');setFilter('cleanser')">Cleansers</a>
+      <a onclick="navigate('products');setFilter('serum')">Serums</a>
+      <a onclick="navigate('products');setFilter('sunscreen')">Sunscreen</a>
+      <a onclick="navigate('products');setFilter('combo')">Combos</a>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p>Get skincare tips and new arrivals in your inbox.</p>
+      <div class="newsletter-row">
+        <input type="email" placeholder="your@email.com"/>
+        <button onclick="showToast('Subscribed!')">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Skinory. All rights reserved.</p>
+    <button class="admin-link" onclick="openAdminLogin()">Admin Login</button>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<!-- CART PANEL -->
+<div class="cart-backdrop" id="cart-backdrop" onclick="closeCart()"></div>
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-header"><h3>Your Cart</h3><button class="cart-close" onclick="closeCart()">×</button></div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer" id="cart-footer" style="display:none;">
+    <div class="free-delivery-bar" id="free-delivery-bar">
+      <span id="free-delivery-msg"></span>
+      <div class="free-delivery-progress"><div class="free-delivery-fill" id="free-delivery-fill"></div></div>
+    </div>
+    <div class="coupon-row">
+      <input type="text" id="coupon-input" placeholder="Promo code…" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()"/>
+      <button onclick="applyCoupon()">Apply</button>
+    </div>
+    <div class="coupon-success" id="coupon-success"></div>
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cart-sub"></span></div>
+    <div class="cart-delivery"><span>Delivery</span><span id="cart-delivery-text">৳80</span></div>
+    <div class="cart-discount" id="cart-discount-row"><span id="cart-discount-label">Discount</span><span id="cart-discount-val"></span></div>
+    <div class="cart-total"><span>Total</span><span id="cart-total-price"></span></div>
+    <button class="btn-checkout" onclick="openCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="product-modal" onclick="closeProductModal(event)" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal('product-modal')">×</button>
+      <div class="gallery-wrap">
+        <div class="gallery-track" id="gallery-track"></div>
+        <button class="gallery-arrow gallery-prev" id="gal-prev" onclick="galleryMove(-1)" style="display:none;">‹</button>
+        <button class="gallery-arrow gallery-next" id="gal-next" onclick="galleryMove(1)" style="display:none;">›</button>
+      </div>
+      <div class="gallery-dots" id="gallery-dots"></div>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+        <div>
+          <div class="modal-name" id="modal-name"></div>
+          <div class="modal-size" id="modal-size"></div>
+          <div class="modal-price-row">
+            <div class="modal-price" id="modal-price"></div>
+            <div class="modal-orig-price" id="modal-orig-price" style="display:none;"></div>
+            <div class="modal-discount" id="modal-discount" style="display:none;"></div>
+          </div>
+          <div class="modal-stars" id="modal-stars"></div>
+          <div class="modal-review-count" id="modal-review-count"></div>
+          <div class="modal-sales" id="modal-sales"></div>
+        </div>
+        <div id="modal-stock-info"></div>
+      </div>
+      <div class="skin-type-row" id="modal-skin"></div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchTab('desc',this)">Description</button>
+        <button class="modal-tab" onclick="switchTab('how',this)">How To Use</button>
+        <button class="modal-tab" onclick="switchTab('ing',this)">Ingredients</button>
+        <button class="modal-tab" onclick="switchTab('rev',this)">Reviews</button>
+      </div>
+      <div class="tab-content active" id="tab-desc"></div>
+      <div class="tab-content" id="tab-how"></div>
+      <div class="tab-content" id="tab-ing"></div>
+      <div class="tab-content" id="tab-rev">
+        <div class="reviews-section">
+          <h4 id="reviews-title">Customer Reviews</h4>
+          <div id="reviews-list"></div>
+          <div class="review-form">
+            <h5>Write a Review</h5>
+            <div class="star-picker" id="star-picker">
+              <span onclick="setReviewStar(1)">★</span><span onclick="setReviewStar(2)">★</span><span onclick="setReviewStar(3)">★</span><span onclick="setReviewStar(4)">★</span><span onclick="setReviewStar(5)">★</span>
+            </div>
+            <div class="form-group"><label>Your Name</label><input type="text" id="rev-name" placeholder="Your name"/></div>
+            <div class="form-group"><label>Review</label><textarea id="rev-text" rows="2" class="filter-select" style="width:100%;resize:vertical;" placeholder="How do you like this product?"></textarea></div>
+            <button class="btn-buy" style="padding:9px 20px;font-size:13px;border-radius:14px;" onclick="submitReview()">Submit Review</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-qty-row">
+        <label>Qty</label>
+        <div class="qty-ctrl-lg">
+          <button class="qty-btn-lg" onclick="changeModalQty(-1)">−</button>
+          <span class="qty-num-lg" id="modal-qty">1</span>
+          <button class="qty-btn-lg" onclick="changeModalQty(1)">+</button>
+        </div>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-modal-cart" id="modal-cart-btn">Add to Cart</button>
+        <button class="btn-modal-buy" id="modal-buy-btn">Buy Now</button>
+      </div>
+      <div class="related-section">
+        <h4>You May Also Like</h4>
+        <div class="related-row" id="related-row"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal" onclick="closeProductModal(event)" style="display:none;">
+  <div class="checkout-box">
+    <div class="checkout-header">
+      <h3>Checkout</h3>
+      <button class="modal-close" style="background:rgba(255,255,255,.2);color:#fff;" onclick="closeModal('checkout-modal')">×</button>
+    </div>
+    <div class="checkout-body">
+      <div class="order-summary-mini"><h4>Order Summary</h4><div id="checkout-summary"></div></div>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" id="c-name" placeholder="Your full name"/></div>
+        <div class="form-group"><label>Phone Number</label><input type="text" id="c-phone" placeholder="01XXXXXXXXX"/></div>
+      </div>
+      <div class="form-group"><label>Delivery Address</label><input type="text" id="c-address" placeholder="House, Road, Area"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>District</label>
+          <select id="c-district" class="filter-select" style="width:100%;border-radius:12px;padding:12px 16px;font-size:14px;">
+            <option>Dhaka</option><option>Chittagong</option><option>Sylhet</option><option>Rajshahi</option><option>Khulna</option><option>Barishal</option><option>Rangpur</option><option>Mymensingh</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Note (optional)</label><input type="text" id="c-note" placeholder="e.g. Call before delivery"/></div>
+      </div>
+      <div class="form-group">
+        <label>Payment Method</label>
+        <div class="payment-opts">
+          <div class="pay-opt selected" onclick="selectPayment(this,'bkash')"><div class="pay-name">bKash</div></div>
+          <div class="pay-opt" onclick="selectPayment(this,'nagad')"><div class="pay-name">Nagad</div></div>
+          <div class="pay-opt" onclick="selectPayment(this,'card')"><div class="pay-name">Card</div></div>
+          <div class="pay-opt" onclick="selectPayment(this,'cod')"><div class="pay-name">Cash on Delivery</div></div>
+        </div>
+      </div>
+      <button class="btn-place-order" onclick="placeOrder()">Place Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS -->
+<div class="modal-overlay" id="order-success" style="display:none;">
+  <div class="success-box">
+    <div class="success-icon">✦</div>
+    <h2>Order Placed!</h2>
+    <p>Thank you for shopping with Skinory. Your order has been received and will be delivered soon.</p>
+    <div class="order-id" id="order-id-display"></div>
+    <p style="font-size:13px;color:var(--text-s);">You'll receive a confirmation on WhatsApp shortly.</p>
+    <br/>
+    <button class="btn-primary" style="margin-top:8px;" onclick="closeModal('order-success');navigate('home')">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal-overlay" id="edit-modal" onclick="closeProductModal(event)" style="display:none;">
+  <div class="edit-modal-box">
+    <h3>Edit Product</h3>
+    <input type="hidden" id="edit-id"/>
+    <div class="edit-form-grid">
+      <div class="form-group"><label>Name</label><input type="text" id="edit-name"/></div>
+      <div class="form-group"><label>Size</label><input type="text" id="edit-size"/></div>
+      <div class="form-group"><label>Price (৳)</label><input type="number" id="edit-price"/></div>
+      <div class="form-group"><label>Sale Price (৳)</label><input type="number" id="edit-sale" placeholder="Leave blank if no sale"/></div>
+      <div class="form-group"><label>Stock</label><input type="number" id="edit-stock"/></div>
+      <div class="form-group"><label>Rating</label><input type="number" id="edit-rating" min="0" max="5" step="0.1"/></div>
+      <div class="form-group"><label>Category</label>
+        <select id="edit-cat" class="filter-select" style="width:100%;border-radius:12px;padding:12px 16px;">
+          <option value="moisturiser">Moisturiser</option><option value="cleanser">Cleanser</option><option value="serum">Serum</option><option value="sunscreen">Sunscreen</option><option value="baby">Baby Care</option><option value="combo">Combo</option>
+        </select></div>
+      <div class="form-group"><label>Mark as New?</label>
+        <select id="edit-new" class="filter-select" style="width:100%;border-radius:12px;padding:12px 16px;"><option value="0">No</option><option value="1">Yes</option></select></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="edit-desc" rows="3" class="filter-select" style="width:100%;resize:vertical;"></textarea></div>
+    <div class="form-group"><label>How To Use</label><textarea id="edit-how" rows="2" class="filter-select" style="width:100%;resize:vertical;"></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn-add-product" onclick="saveEditProduct()">Save Changes</button>
+      <button onclick="closeModal('edit-modal')" style="background:var(--rose-l);color:var(--rose);border:none;border-radius:20px;padding:13px 24px;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="admin-login-modal" style="display:none;">
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <p>Enter your credentials to access the admin panel</p>
+    <div class="form-group" style="text-align:left;"><label>Username</label><input type="text" id="login-user" placeholder="Username" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="form-group" style="text-align:left;"><label>Password</label><input type="password" id="login-pass" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="login-error" id="login-error">Incorrect username or password.</div>
+    <button class="btn-login" onclick="doLogin()">Login</button>
+    <button onclick="closeModal('admin-login-modal')" style="margin-top:12px;background:none;border:none;color:var(--text-s);font-size:13px;font-family:'DM Sans',sans-serif;">Cancel</button>
+  </div>
+</div>
+
+<!-- Connects to your JS file -->
+<script src="script.js"></script>
+</body>
+</html>
